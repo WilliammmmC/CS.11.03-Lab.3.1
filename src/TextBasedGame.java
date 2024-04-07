@@ -4,9 +4,9 @@ public class TextBasedGame {
     static Scanner scanner = new Scanner(System.in);
     static int CurrentValue = 100;
     int GoalValue = 1000;
-    static int lotteryimput = 0;
-    static String riddleimput = "";
-    static String boximput = "";
+    static int lotteryinput = 0;
+    static String riddleinput = "";
+    static String boxinput = "";
 
     static boolean Gameover = false;
     public static void main(String[] args) {
@@ -17,13 +17,14 @@ public class TextBasedGame {
         System.out.println("You have $100 for now, and your goal is to reach $1000");
         System.out.println("Invest wise, you loose when your balance reaches zero.");
         System.out.println("Good luck, and enjoy.");
-    if(!Gameover){
-            while (CurrentValue > 50) {
+        while (!Gameover) {
+            while (CurrentValue > 50 && !Gameover) {
                 System.out.println("Please choose a stock to purchase (StockA, StockB, StockC, StockD)");
                 String input = scanner.nextLine();
                 if (CurrentValue >= 1000) {
                     System.out.println("You have completed the game. Congrats");
                     Gameover = true;
+                    break;
                 } else if (input.equals("StockA")) {
                     BuyStockA();
                 } else if (input.equals("StockB")) {
@@ -36,41 +37,44 @@ public class TextBasedGame {
                     System.out.println("Please check your input.");
                 }
             }
-            while (CurrentValue <= 50 && CurrentValue > 0) {
+            while (CurrentValue <= 50 && CurrentValue > 0 && !Gameover) {
                 System.out.println("Oops. It looks like your balance is running low!");
-                System.out.println("Lets play some lottery!");
+                System.out.println("Lets play a lottery game!");
                 System.out.println("Pick a game (Game1, Game2, Game3");
                 String PickAGame = scanner.nextLine();
                 if (PickAGame.equals("Game1")) {
                     System.out.println("Pick a number between 1 and 9");
-                    lotteryimput = scanner.nextInt();
-                    Lottery(lotteryimput);
-                } else if (PickAGame == "Game2") {
+                    lotteryinput = Integer.parseInt(scanner.nextLine());
+                    Lottery(lotteryinput);
+                } else if (PickAGame.equals("Game2")){
                     System.out.println("Solve the following riddle:");
                     System.out.println("I am always hungry, I must always be fed,\n" + "The finger I touch, will soon turn red.");
-                    riddleimput = scanner.nextLine();
-                    Riddle(riddleimput);
+                    riddleinput = scanner.nextLine();
+                    Riddle(riddleinput);
                 } else {
-                    System.out.println("Theres four boxes in front of you. Pick one (Box1, Box2, Box3, Box4");
-                    boximput = scanner.nextLine();
-                    if (boximput.equals("Box1")) {
+                    System.out.println("Theres four boxes in front of you. Pick one (Box1, Box2, Box3, Box4)");
+                    boxinput = scanner.nextLine();
+                    if (boxinput.equals("Box1")) {
                         Box1();
-                    } else if (boximput.equals("Box2")) {
+                    } else if (boxinput.equals("Box2")) {
                         Box2();
-                    } else if (boximput.equals("Box3")) {
+                    } else if (boxinput.equals("Box3")) {
                         Box3();
-                    } else{
+                    } else {
                         Box4();
                         System.out.println("Your current value is: " + CurrentValue);
                     }
 
+
                 }
 
             }
+            if(CurrentValue <= 0){
+                System.out.println("Gameover. Try again later.");
+                break;
+            }
         }
-    else{
-        System.out.println("Congrats. You have succeeded");
-    }
+
 
     }
     public static void BuyStockA(){
@@ -97,18 +101,18 @@ public class TextBasedGame {
         System.out.println("Now, you have " + "$" + CurrentValue);
     }
 
-    public static void Lottery( int lotteryimput){
-        CurrentValue = CurrentValue + lotteryimput*10;
+    public static void Lottery( int lotteryinput){
+        CurrentValue = CurrentValue + lotteryinput*10;
         System.out.println("Now, you have " + "$" + CurrentValue);
     }
 
-    public static String Riddle(String riddleimput){
-        if(riddleimput == "fire"){
+    public static String Riddle(String riddleinput){
+        if(riddleinput.equals("fire")){
             CurrentValue += 100;
             return "Congratulation, you have guessed the riddle. Now, you have " + "$" + CurrentValue;
-        } else{
-            return "Oops, not quite.";
         }
+            return "Oops, not quite.";
+
     }
 
     public static String Box1(){
